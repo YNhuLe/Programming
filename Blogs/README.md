@@ -16,10 +16,10 @@ Getting this baby up and running is as easy as pie 🥧. Just follow these steps
     cd flask-blog-funtime
     ```
 
-2. **Set up your virtual environment** 🐍:
+2. **Set up your conda environment** 🐍:
     ```bash
-    python3 -m venv venv
-    source venv/bin/activate
+    conda env create -f environment.yml
+    conda activate envname
     ```
 
 3. **Install the dependencies** 📦:
@@ -29,7 +29,7 @@ Getting this baby up and running is as easy as pie 🥧. Just follow these steps
 
 4. **Run the app** 🏃‍♂️:
     ```bash
-    python app.py
+    python main.py
     ```
 
 5. **Open your browser** 🌐 and head to:
