@@ -1,4 +1,4 @@
-name: flask_project
+name: my_personal_site
 channels:
   - defaults
 dependencies:

@@ -1,7 +1,7 @@
 import datetime
 from flask import Flask, render_template
 import requests
-from post import Post, var_e
+from post import Post
 
 
 blog_api = 'https://api.npoint.io/ec9ee8e3ac7c9f469029'
@@ -29,7 +29,7 @@ def show_post(index):
         if blog_post.id == index:
             requested_post = blog_post
     return render_template('post.html', y=year, post=requested_post)
-print(var_e)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

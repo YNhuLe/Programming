@@ -4,6 +4,3 @@ class Post:
         self.title = title
         self.subtitle = subtitle
         self.body = body
-
-
-var_e=555555

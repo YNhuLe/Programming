@@ -11,3 +11,4 @@ MarkupSafe @ file:///C:/b/abs_ecfdqh67b_/croot/markupsafe_1704206030535/work
 requests==2.32.3
 urllib3==2.2.2
 Werkzeug @ file:///C:/b/abs_8bittcw9jr/croot/werkzeug_1716533366070/work
+flask~=3.0.3
