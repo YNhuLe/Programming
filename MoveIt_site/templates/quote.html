@@ -10,8 +10,8 @@
 <body>
 <h1>YOUR CONTACT INFORMATION</h1>
 
-<div class="container mt-2">
-<form class="row g-3">
+<div class="container mt-5">
+<form class="row g-3 col-md-6 mx-right">
   <div class="col-md-6">
     <label for="inputFirstName" class="form-label" >First Name</label>
     <input type="email" class="form-control" id="inputFirstName" placeholder="John" required>
@@ -59,18 +59,28 @@
   </div>
 
   <h1>TELL US ABOUT YOUR MOVE</h1>
-  <div class="mb-3">
+  <div class="col-md-6">
     <label for="movingFrom" class="form-label">Moving From</label>
     <input type="email" class="form-control" id="movingFrom" aria-describedby="emailHelp">
   </div>
-  <div class="mb-3">
+  <div class="col-md-6">
     <label for="movingTo" class="form-label">Moving To</label>
     <input type="password" class="form-control" id="movingTo">
   </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+   <div class="col-md-6">
+    <label for="typeOfMove" class="form-label">Type of Move</label>
+    <select id="typeOfMove" class="form-select">
+         {% for move_type in type_list %}
+           <option>   {{move_type}} </option>
+         {% endfor %}
+
+    </select>
   </div>
+  <div class="col-md-4">
+    <label for="movingDate" class="move-date">Move Date</label>
+    <input type="date" id="movingDate" name="moving-date">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
     </div>
