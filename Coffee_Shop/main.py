@@ -12,12 +12,37 @@ Bootstrap5(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
+    location = StringField("cafe location on Google map", validators=[DataRequired(), URL()])
+    open = StringField("Opening hour", validators=[DataRequired()])
+    close = StringField("Closing hour", validators=[DataRequired()])
+    coffee_rating = SelectField("Coffee Rating", validators=[DataRequired()],
+                                choices=["☕️", "☕☕", "☕☕☕", "☕☕☕☕", "☕☕☕☕☕"])
+    power_rating = SelectField("Power Rating", validators=[DataRequired()],
+                               choices=["✘", "💪", "💪💪", "💪💪💪", "💪💪💪💪", "💪💪💪💪💪"])
+    wifi_rating = SelectField("Wifi rating", validators=[DataRequired()],
+                              choices=["✘", "🔌", "🔌🔌", "🔌🔌🔌", "🔌🔌🔌🔌", "🔌🔌🔌🔌🔌"])
     submit = SubmitField('submit')
 
 
 @app.route('/')
 def home():
     return render_template("index.html")
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add_cafes():
+    form = CafeForm()
+    if form.validate_on_submit():
+        with open("cafe-data.csv", mode="a", encoding="utf-8") as csv_file:
+            csv_file.write(f"\n{form.cafe.data},"
+                           f"{form.location.data},"
+                           f"{form.open.data},"
+                           f"{form.close.data},"
+                           f"{form.coffee_rating.data},"
+                           f"{form.wifi_rating.data},"
+                           f"{form.power_rating.data}")
+        return redirect(url_for("cafes_list"))
+    return render_template("add.html", form=form)
 
 
 @app.route('/cafes')

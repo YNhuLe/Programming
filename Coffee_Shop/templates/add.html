@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %} Add a new cafe {% endblock %}
 
-</body>
-</html>
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+
+      <h1>Add a new cafe into the database</h1>
+        {{ render_form(form) }}
+      <p class="space-above"><a href="{{ url_for('cafes_list') }}">See all cafes</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
