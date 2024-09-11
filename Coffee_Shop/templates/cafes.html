@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<div class="px-4 pt-5 my-5 text-center">
+    <h1 class="display-4 fw-bold text-body-emphasis">All Cafes</h1>
+<!--    <div class="col-lg-6 mx-auto">-->
+<!--        <p class="lead mb-4">-->
+<!--In the heart of the city, cozy coffee shops offer more than just a caffeine fix. These vibrant spaces blend rich aromas,-->
+<!--            artisan brews, and a welcoming atmosphere. Whether you're grabbing a quick espresso or lingering with a latte,-->
+<!--            each café invites you to relax, recharge, and savor the essence of urban life. With unique blends,-->
+<!--            freshly baked goods, and friendly baristas,-->
+<!--            these local spots are perfect for meeting friends, getting work done, or simply enjoying a quiet moment.-->
+<!--        </p>-->
+<!--    </div>-->
+<!--    <div class="overflow-hidden" style="max-height: 70vh;">-->
+     <div id="carouselExampleCaptions" class="carousel slide">
+
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4" style="color:white">
+In the heart of the city, cozy coffee shops offer more than just a caffeine fix. These vibrant spaces blend rich aromas,
+            artisan brews, and a welcoming atmosphere. Whether you're grabbing a quick espresso or lingering with a latte,
+            each café invites you to relax, recharge, and savor the essence of urban life. With unique blends,
+            freshly baked goods, and friendly baristas,
+            these local spots are perfect for meeting friends, getting work done, or simply enjoying a quiet moment.
+        </p>
+    </div>
+    <div class="carousel-item active">
+      <img class="customize-size" src="../static/assets/coffe_cup.jpg" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Mare Street Market</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="customize-size" src="../static/assets/coffe_shop.jpg"  alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Lighthaus</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="customize-size" src="../static/assets/coffee_relax.jpg"  alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Easters</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+  </div>
+<div class="container">
+<div class="row" >
+     <div class="col-sm-12">
+<table class="table table-dark table-striped table-hover">
+    <thead>
+
+    <tr>
+        {% for header in cafes[0] %}
+        <th>{{ header }}</th>
+        {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in cafes[1:] %}
+    <tr>
+        {% for value in row %}
+             <th>{{value}}</th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    <a href="{{ url_for('home') }}" class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2">
+  Back to home page
+</a>
+</div>
+</div>
+</div>
+{% endblock %}
