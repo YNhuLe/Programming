@@ -1,14 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
-.container{
+/*.container{
 margin-top:5rem;
-width:50rem;
+width:40rem;
 color: red;
-}
+}*/
 
 h1{
 text-align: center;
-padding-bottom: 1rem;
+padding: 2rem 0 2rem 0;
+color: green;
 }
 
 .card-list {
@@ -24,11 +25,19 @@ padding-bottom: 1rem;
 }
 
 .card-item {
-
     flex: 1;                     /* Allows each card to take equal width */
     min-width: 250px;            /* Sets a minimum width for each card */
 }
+.card{
+width: 18rem;
+}
+/*
+.card img{
+    width: 18rem;
+    height: 15rem;
+}*/
 
-.card {
-    width: 18rem;                 /* Ensure the card takes full width within the item */
+img{
+
+height: 15rem
 }

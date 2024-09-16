@@ -7,18 +7,20 @@
 
 
 {% block content %}
-<div class="container">
-    <h1>My BookShelf</h1>
+<h1>My BookShelf</h1>
+<div class="container  d-flex align-items-center">
 
-<ul class="card-list d-flex align-items-center">
+
+<ul class="card-list">
     {% for book in books %}
-<li class="list-group-item card-item">
+<li class="list-group-item card-item ">
     <div class="card">
-  <img src="https://th.bing.com/th?id=OIP.9j0kj9e2UhR1jB6q-9MviAHaEt&w=313&h=199&c=8&rs=1&qlt=90&o=6&cb=13&dpr=1.5&pid=3.1&rm=2" class="card-img-top" alt="...">
-  <div class="card-body">
+  <img src="{{book.image}}" alt="Book Image" >
+        <div class="card-body">
     <h5 class="card-title">{{book.title}}</h5>
+            <span class="badge text-bg-primary rounded-pill" style="float:right;">{{book.rating}}</span>
     <p class="card-text">By author: {{book.author}}</p>
-    <a href="{{url_for('add')}}" class="btn btn-primary">Update Rating</a>
+    <a href="{{url_for('edit',id=book.id)}}" class="btn btn-primary">Update Rating</a>
       <a href="{{url_for('delete',id=book.id)}}" class="btn btn-warning">Delete</a>
 
   </div>
@@ -27,9 +29,10 @@
     {% endfor %}
 </ul>
 
-    <div class="d-flex justify-content-end mt-2">
-    <a href="{{url_for('add')}}" class="btn btn-success align-items-baseline" role="button">Add Book</a>
+
 </div>
+    <div class="d-flex justify-content-center mt-2">
+    <a href="{{url_for('add')}}" class="btn btn-success align-items-baseline" role="button">Add Book</a>
 </div>
 
 {% endblock %}

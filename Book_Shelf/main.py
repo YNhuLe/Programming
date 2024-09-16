@@ -14,6 +14,7 @@ app.config['SECRET_KEY'] = 'lenhuy1996'
 
 bootstrap = Bootstrap5(app)
 
+
 class Base(DeclarativeBase):
     pass
 
@@ -27,6 +28,7 @@ class AddForm(FlaskForm):
     title = StringField(label='Book Name: ', validators=[DataRequired()])
     author = StringField(label='Book Author: ', validators=[DataRequired()])
     rating = FloatField(label='Rating: ', validators=[DataRequired()])
+    image = StringField(validators=[DataRequired()])
 
 
 class UpdateForm(FlaskForm):
@@ -39,6 +41,7 @@ class Book(db.Model):
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     author: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     rating: Mapped[float] = mapped_column(Float, nullable=False)
+    image: Mapped[str] = mapped_column(String(500), nullable=False)
 
 
 # initialise the database table
@@ -65,7 +68,8 @@ def add():
             # rating=request.form['rating']
             title=form.title.data,
             author=form.author.data,
-            rating=form.rating.data
+            rating=form.rating.data,
+            image=form.image.data
 
         )
         db.session.add(new_book)
