@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+/*.container{
+margin-top:5rem;
+width:40rem;
+color: red;
+}*/
+
+h1{
+text-align: center;
+padding: 2rem 0 2rem 0;
+color: green;
+}
+
+.card-list {
+    display: flex;
+    flex-direction: row;
+
+    align-items:center;
+
+    padding: 0;
+    list-style: none;
+    gap: 3rem;
+    flex-wrap:wrap;
+}
+
+.card-item {
+    flex: 1;                     /* Allows each card to take equal width */
+    min-width: 250px;            /* Sets a minimum width for each card */
+}
+.card{
+width: 18rem;
+}
+/*
+.card img{
+    width: 18rem;
+    height: 15rem;
+}*/
+
+img{
+
+height: 15rem
+}

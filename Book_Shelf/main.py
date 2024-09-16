@@ -1,11 +1,17 @@
-from flask import Flask, render_template, url_for, request, redirect, abort
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, Float, String
 from flask_bootstrap import Bootstrap5
+from wtforms import StringField, FloatField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+app.config['WTF_CSRF_ENABLED'] = True
+
+app.config['SECRET_KEY'] = 'lenhuy1996'
+
 bootstrap = Bootstrap5(app)
 
 
@@ -18,12 +24,24 @@ db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
 
+class AddForm(FlaskForm):
+    title = StringField(label='Book Name: ', validators=[DataRequired()])
+    author = StringField(label='Book Author: ', validators=[DataRequired()])
+    rating = FloatField(label='Rating: ', validators=[DataRequired()])
+    image = StringField(validators=[DataRequired()])
+
+
+class UpdateForm(FlaskForm):
+    rating = FloatField(label='Rating: ', validators=[DataRequired()])
+
+
 # create the table schema
 class Book(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     author: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     rating: Mapped[float] = mapped_column(Float, nullable=False)
+    image: Mapped[str] = mapped_column(String(500), nullable=False)
 
 
 # initialise the database table
@@ -41,22 +59,34 @@ def home():
 # add book into the bookshelf
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    if request.method == "POST":
+    form = AddForm()
+
+    if request.method == "POST" and form.validate_on_submit():
         new_book = Book(
-            title=request.form['title'],
-            author=request.form['author'],
-            rating=request.form['rating']
+            # title=request.form['title'],
+            # author=request.form['author'],
+            # rating=request.form['rating']
+            title=form.title.data,
+            author=form.author.data,
+            rating=form.rating.data,
+            image=form.image.data
+
         )
         db.session.add(new_book)
         db.session.commit()
+        flash('Book added successfully!', 'success')
         return redirect(url_for('home'))
-    return render_template('add.html')
+    else:
+        print(form.errors)
+        flash('Error: Please correct the error in the form.', 'danger')
+    return render_template('add.html', add_form=form)
 
 
 # find, and update rating base on the id
 @app.route('/edit', methods=["GET", "POST"])
 def edit():
-    if request.method == "POST":
+    form = UpdateForm()
+    if request.method == "POST" and form.validate_on_submit():
         book_id = request.form['id']
         book_to_update = db.get_or_404(Book, book_id)
         book_to_update.rating = request.form['rating']
@@ -64,16 +94,17 @@ def edit():
         return redirect(url_for('home'))
     book_id = request.args.get('id')  # retrieve query parameter named 'id' from the URL
     book_selected = db.get_or_404(Book, book_id)
-    return render_template("edit.html", book=book_selected)
+    return render_template("edit.html", book=book_selected, edit_form=form)
 
 
 @app.route('/delete')
 def delete():
     book_id = request.args.get('id')
-    book_to_delete = db.get_or_404(Book,book_id)
+    book_to_delete = db.get_or_404(Book, book_id)
     db.session.delete(book_to_delete)
     db.session.commit()
     return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
