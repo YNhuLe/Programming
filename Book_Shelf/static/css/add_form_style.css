@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+
+.container{
+margin-top:10rem;
+background-image:url('../assets/book_cover.jpg');
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+color: white;
+padding-bottom: .1rem;
+font-weight: bold;
+}
+h1{
+font-family: 'Merriweather', serif;
+}

@@ -1,11 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Book</title>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Edit Book</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+{% extends 'base.html' %}
+{% block title %} Edit Rating {% endblock %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+
+<div class="container">
+    <h1>Edit rating</h1>
 <form action="{{url_for('edit') }}" method="POST">
+     {{ edit_form.hidden_tag() }}
     <p> Book name: {{ book.title  }}</p>
     <p> Current rating: {{ book.rating }}</p>
     <input hidden="hidden" name="id" value="{{book.id}}">
@@ -14,5 +26,6 @@
 
 
 </form>
-</body>
-</html>
+</div>
+
+{% endblock %}

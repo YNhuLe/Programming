@@ -13,3 +13,4 @@ urllib3==2.2.2
 Werkzeug @ file:///C:/b/abs_8bittcw9jr/croot/werkzeug_1716533366070/work
 flask~=3.0.3
 wtforms~=3.0.1
+sqlalchemy~=2.0.25
