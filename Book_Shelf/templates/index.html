@@ -29,10 +29,10 @@
     {% endfor %}
 </ul>
 
-
+<!--d-flex justify-content-center mt-2  -->
 </div>
-    <div class="d-flex justify-content-center mt-2">
-    <a href="{{url_for('add')}}" class="btn btn-success align-items-baseline" role="button">Add Book</a>
-</div>
+    <div class="d-grid gap-1 col-2 mx-auto" style="padding: 2rem;">
+    <a href="{{url_for('add')}}" class="btn btn-success align-items-baseline btn-lg" role="button">Add Book</a>
+    </div>
 
 {% endblock %}

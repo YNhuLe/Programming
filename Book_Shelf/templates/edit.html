@@ -5,28 +5,9 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% block content %}
 
-<div class="container" style="width:50rem;height:100rem;">
-<!--    <h1>Edit rating</h1>-->
-<!--    <img src="{{book.image}}" style="width:12rem; height:3rem;" class="card-img">-->
-<!--<form action="{{url_for('edit') }}" method="POST" class="row g-3">-->
-<!--     {{ edit_form.hidden_tag() }}-->
-<!--    <p> Book name: {{ book.title  }}</p>-->
-<!--    <p> Current rating: {{ book.rating }}</p>-->
-<!--    <input hidden="hidden" name="id" value="{{book.id}}">-->
-
-<!--    <div class="col-auto">-->
-<!--    <label for="rating" class="visually-hidden">New Rating</label>-->
-<!--    <input type="text" class="form-control" id="rating" placeholder="New Rating" name="rating">-->
-<!--  </div>-->
-<!--    <div class="col-auto">-->
-<!--    <button type="submit" class="btn btn-primary">Change Rating</button>-->
-<!--/<div>-->
-
-
-<!--</form>-->
-
+<div class="container" style="width:50rem;height:80rem;margin-top:5rem;" >
  <div class="card text-bg-dark">
-  <img src="{{book.image}}" class="card-img" alt="book">
+  <img src="{{book.image}}" class="card-img" alt="book" >
   <div class="card-img-overlay">
     <h5 class="card-title">{{book.title}}</h5>
     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
