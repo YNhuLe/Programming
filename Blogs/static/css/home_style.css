@@ -1,0 +1,15 @@
+.masthead{
+background-image: url({{ url_for('static', filename='assets/img/home-bg.jpg') }});
+height:100%;
+background-repeat:no-repeat;
+ background-size:cover;
+background-position:center;
+
+
+#heading{
+color: green;}
+}
+
+.navbar-brand{
+color: green;
+}
