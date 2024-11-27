@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
@@ -48,12 +50,13 @@ class Book(db.Model):
 with app.app_context():
     db.create_all()
 
+year = datetime.datetime.now().year
 
 @app.route("/")
 def home():
     result = db.session.execute(db.select(Book).order_by(Book.title))
     all_books = result.scalars().all()
-    return render_template("index.html", books=all_books)
+    return render_template("index.html", books=all_books,year=year)
 
 
 # add book into the bookshelf
@@ -63,9 +66,6 @@ def add():
 
     if request.method == "POST" and form.validate_on_submit():
         new_book = Book(
-            # title=request.form['title'],
-            # author=request.form['author'],
-            # rating=request.form['rating']
             title=form.title.data,
             author=form.author.data,
             rating=form.rating.data,
@@ -94,7 +94,7 @@ def edit():
         return redirect(url_for('home'))
     book_id = request.args.get('id')  # retrieve query parameter named 'id' from the URL
     book_selected = db.get_or_404(Book, book_id)
-    return render_template("edit.html", book=book_selected, edit_form=form)
+    return render_template("edit.html", book=book_selected, edit_form=form, year=year)
 
 
 @app.route('/delete')
@@ -105,6 +105,10 @@ def delete():
     db.session.commit()
     return redirect(url_for('home'))
 
+#add the about page and subscription
+@app.route('/aboutUs')
+def about():
+    return render_template("aboutUs.html", year=year)
 
 if __name__ == "__main__":
     app.run(debug=True)
