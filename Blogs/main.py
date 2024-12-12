@@ -2,11 +2,12 @@ from flask import Flask, render_template, request, url_for, redirect, flash, get
 import requests
 from datetime import datetime, date
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, Text
+from sqlalchemy import Integer, String, Text, Float, Boolean
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bootstrap import Bootstrap
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_ckeditor import CKEditor
+from Book_Shelf.config import SECRET
 
 from forms import RegisterForm, CreatePostForm, LoginForm
 from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user
@@ -15,9 +16,9 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, curren
 
 app = Flask(__name__)
 app.config['WTF_CSRF_ENABLED'] = True
-app.config['SECRET_KEY'] = 'lenhuy1996'
+app.config['SECRET_KEY'] = 'SECRET'
 Bootstrap(app)
-ckeditor=CKEditor(app)
+ckeditor = CKEditor(app)
 
 
 class Base(DeclarativeBase):
@@ -26,8 +27,11 @@ class Base(DeclarativeBase):
 
 # config the User table
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
-# config the BLogPost table
+# config the BlogPost table
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+# config the Comment table
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
+
 # config the User table
 # app.config['SQLALCHEMY_BINDS'] = {
 #     'users': 'sqlite:///users.db',
@@ -57,6 +61,15 @@ class BlogPost(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+
+
+# create Comment table in database
+# class Comment(db.Model):
+#     __tablename__ = "comments"
+#     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+#     input: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+#     rating: Mapped[float] = mapped_column(Float, nullable=False)
+#     like: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 with app.app_context():
