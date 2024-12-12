@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, URL
+from wtforms import StringField, SubmitField, PasswordField, FloatField, BooleanField
+from wtforms.validators import DataRequired, URL, NumberRange
 from flask_ckeditor import CKEditorField
 
 
@@ -25,3 +25,10 @@ class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Let me in!")
+
+
+class CommentForm(FlaskForm):
+    input = StringField("Comment", validators=[DataRequired()])
+    rating = FloatField("rating (0.0 to 5.0", validators=[NumberRange(min=0.0, max=5.0)])
+    like = BooleanField("Like this post")
+    submit = SubmitField("Send")
