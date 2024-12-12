@@ -1,5 +1,5 @@
 <link href="../static/css/book_list.css" rel="stylesheet">
-
+<script src="https://kit.fontawesome.com/f1ff49199a.js" crossorigin="anonymous"></script>
 
 
 {% extends 'base.html' %}
@@ -15,13 +15,17 @@
     {% for book in books %}
 <li class="list-group-item card-item ">
     <div class="card">
+        <a href="{{url_for('delete',id=book.id)}}" >
+            <i class="fa-solid fa-circle-xmark fa-1x" style="position: absolute; top:10px; right:10px; cursor:pointer;color:black"></i>
+        </a>
+
   <img src="{{book.image}}" alt="Book Image" >
         <div class="card-body">
     <h5 class="card-title">{{book.title}}</h5>
             <span class="badge text-bg-primary rounded-pill" style="float:right;">{{book.rating}}</span>
     <p class="card-text">By author: {{book.author}}</p>
     <a href="{{url_for('edit',id=book.id)}}" class="btn btn-primary">Update Rating</a>
-      <a href="{{url_for('delete',id=book.id)}}" class="btn btn-warning">Delete</a>
+      <a href="{{url_for('shop', id=book.id)}}" class="btn btn-success">Shop</a>
 
   </div>
 </div>
