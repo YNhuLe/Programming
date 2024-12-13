@@ -7,16 +7,17 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bootstrap import Bootstrap
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_ckeditor import CKEditor
-from Book_Shelf.config import SECRET
+from config import SECRET
 
 from forms import RegisterForm, CreatePostForm, LoginForm
 from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user
 
-# posts = requests.get("https://api.npoint.io/6fa2a608d6fc9a520b1a").json()
+from functools import wraps
+from flask import abort
 
 app = Flask(__name__)
 app.config['WTF_CSRF_ENABLED'] = True
-app.config['SECRET_KEY'] = 'SECRET'
+app.config['SECRET_KEY'] = SECRET
 Bootstrap(app)
 ckeditor = CKEditor(app)
 
@@ -31,12 +32,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 # config the Comment table
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
-
-# config the User table
-# app.config['SQLALCHEMY_BINDS'] = {
-#     'users': 'sqlite:///users.db',
-#     'posts': 'sqlite:///posts.db'
-# }
 
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
@@ -64,12 +59,12 @@ class BlogPost(db.Model):
 
 
 # create Comment table in database
-# class Comment(db.Model):
-#     __tablename__ = "comments"
-#     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-#     input: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
-#     rating: Mapped[float] = mapped_column(Float, nullable=False)
-#     like: Mapped[bool] = mapped_column(Boolean, nullable=True)
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    input: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    rating: Mapped[float] = mapped_column(Float, nullable=False)
+    like: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 with app.app_context():
@@ -148,8 +143,22 @@ def receive_data():
                            phone_data=phone, message_data=message)
 
 
+# create admin-only decorator
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # if user is not 1 then return 403 error
+        if current_user.id != 1:
+            return abort(403)
+        # otherwise, continue with the route function
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 # add new post
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -169,6 +178,7 @@ def add_new_post():
 
 # edit post based on the id
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
     edit_form = CreatePostForm(
@@ -230,6 +240,7 @@ def register():
 
 # delete a post based on the post_id
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete_post(post_id):
     post_to_delete = db.get_or_404(BlogPost, post_id)
     db.session.delete(post_to_delete)
