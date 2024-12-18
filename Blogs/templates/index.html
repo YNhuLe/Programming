@@ -30,7 +30,7 @@
         </a>
         <p class="post-meta">
           Posted by
-          <a href="#!">{{ post.author }}</a>
+          <a href="#!">{{ post.author.name }}</a>
           on {{ post.date }}
 
       <!--only allow Admin( first user) to delete the post-->
@@ -53,7 +53,7 @@
           >Create New Post</a
         >
       </div>
-      {% endif %}
+<!--      {% endif %}-->
 
       <!-- Pager-->
       <div class="d-flex justify-content-end mb-4">

@@ -9,10 +9,11 @@ from flask_bootstrap import Bootstrap5
 from wtforms import StringField, FloatField
 from wtforms.validators import DataRequired
 from Book_Shelf.config import SECRET
+
 app = Flask(__name__)
 app.config['WTF_CSRF_ENABLED'] = True
 
-app.config['SECRET_KEY'] = 'SECRET'
+app.config['SECRET_KEY'] = SECRET
 
 bootstrap = Bootstrap5(app)
 
@@ -54,11 +55,12 @@ with app.app_context():
 
 year = datetime.datetime.now().year
 
+
 @app.route("/")
 def home():
     result = db.session.execute(db.select(Book).order_by(Book.title))
     all_books = result.scalars().all()
-    return render_template("index.html", books=all_books,year=year)
+    return render_template("index.html", books=all_books, year=year)
 
 
 # add book into the bookshelf
@@ -99,7 +101,8 @@ def edit():
     book_selected = db.get_or_404(Book, book_id)
     return render_template("edit.html", book=book_selected, edit_form=form, year=year)
 
-#route to shop the book
+
+# route to shop the book
 @app.route('/shop')
 def shop():
     book_id = request.args.get('id')
@@ -110,9 +113,10 @@ def shop():
     return jsonify({
         'id': book_to_shop.id,
         'name': book_to_shop.title,
-        'author':book_to_shop.author,
+        'author': book_to_shop.author,
         'shop': book_to_shop.shop
     })
+
 
 @app.route('/delete')
 def delete():
@@ -122,10 +126,12 @@ def delete():
     db.session.commit()
     return redirect(url_for('home'))
 
-#add the about page and subscription
+
+# add the about page and subscription
 @app.route('/aboutUs')
 def about():
     return render_template("aboutUs.html", year=year)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
