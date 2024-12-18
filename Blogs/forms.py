@@ -9,7 +9,7 @@ class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
     subtitle = StringField("Subtitle", validators=[DataRequired()])
     img_url = StringField("Blog Image URL", validators=[DataRequired(), URL()])
-    body = CKEditorField("BLog Content", validators=[DataRequired()])
+    body = CKEditorField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
 
 
@@ -28,7 +28,5 @@ class LoginForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    input = StringField("Comment", validators=[DataRequired()])
-    rating = FloatField("rating (0.0 to 5.0", validators=[NumberRange(min=0.0, max=5.0)])
-    like = BooleanField("Like this post")
+    comment_text = CKEditorField("Comment", validators=[DataRequired()])
     submit = SubmitField("Send")
