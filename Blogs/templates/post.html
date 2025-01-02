@@ -1,13 +1,11 @@
 {% from "bootstrap5/form.html" import render_form %}
-<!--{% block content %}-->
 {% include "header.html" %}
 
 <style>
-  .image{
-width: 50px;
-height: 50px;
-
-}
+      .image{
+    width: 50px;
+    height: 50px;
+    }
 
     .comment{
     background-color:#DCE4C9;
@@ -15,14 +13,23 @@ height: 50px;
     }
 
     .ava{
-    border-radius: 50%;}
+    border-radius: 50%;
+    }
 
+    .sub-text{
+    font-size: 15px;
+    color: grey;
+    }
+
+    .btn{
+    margin-top: 15px;
+    }
 </style>
 
 
 <!-- Page Header-->
-<header class="masthead" style="height:100%;background-image: url('{{ post.img_url }}');background-position:center;background-size:cover;
-background-repeat:no-repeat;">
+<header class="masthead" style="height:100%;background-image: url('{{ post.img_url }}');
+background-position:center;background-size:cover;background-repeat:no-repeat;">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -45,7 +52,7 @@ background-repeat:no-repeat;">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>{{ post.body | safe }}</p>
-<!--                only show the edit button to admin( first user)-->
+<!--only show the edit button to admin( first user)-->
                 {% if current_user.id == 1: %}
                     <div class="d-flex justify-content-end mb-4">
                      <a class="btn btn-primary float-right"
@@ -53,35 +60,52 @@ background-repeat:no-repeat;">
             </div>
                 {% endif %}
 
-        <!--Load the CKEditor for the comment section-->
+<!--        Load the CKEditor for the comment section, the form will be cleared out after the submission -->
+
+            <form method="POST" id="myForm">
+                {{ form.hidden_tag() }}
+                {{ form.comment_text(novalidate=True) }}
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
                 {{ ckeditor.load() }}
-                {{ ckeditor.config(name='comment_text')}}
-                {{ render_form(form, novalidate=True, button_map={"submit":"primary"} )}}
+                {{ ckeditor.config(name='comment_text') }}
+
         <div class="col-lg-8 col-md-10 mx-auto comment">
           <ul class="commentList">
               {% for comment in post.comments: %}
             <li>
               <div class="commenterImage">
                 <img class="ava"
-                  src="{{avatar[comment.comment_author.id]}}"
-                />
+                  src="{{avatar[comment.comment_author.id]}}"/>
+                  <span> {{comment.comment_author.name}} </span>
+                  <span class="date sub-text">{{posted_time[loop.index - 1] }}</span>
+
               </div>
               <div class="commentText">
+                    {{comment.text|safe }}
+                  <span>
+                      {% if comment.comment_author.email == logged_in.email: %}
+                      <a href="{{url_for('delete_comment',comment_id=comment.id, post_id = post.id)}} ">✘</a>
+                      {% endif %}
+                  </span>
 
-                <span class="date sub-text">{{comment.comment_author.name}}</span>
-                     {{comment.text|safe }}
               </div>
             </li>
                {% endfor %}
           </ul>
         </div>
-
-
-
             </div>
         </div>
     </div>
-</article>
+    </article>
+
+
+<script src="{{url_for('static', filename='js/post.js')}}">
+
+</script>
+
+
+
+
 
 {% include "footer.html" %}
-<!--{% endblock %}-->
