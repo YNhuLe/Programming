@@ -3,9 +3,9 @@
 {% block content %}
 {% include "header.html" %}
 <style>
-  .btn-margin-top {
-    margin-top: 20px;
-  }
+    .btn-margin-top {
+      margin-top: 15px;
+    }
 </style>
 
 <header
@@ -27,11 +27,15 @@
 <main class="mb-4">
   <div class="container">
     <div class="row">
-      {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-      {% for message in messages %}
-      <p class='flash'>{{message}}</p>
-      {% endfor %}
+<!--      {% for message in messages %}-->
+<!--      <p class='flash'>{{message}}</p>-->
+<!--      {% endfor %}-->
+
+      <div class="alert alert-danger mt-3">
+        {{ messages[0][1] }}
+      </div>
       {% endif %}
       {% endwith %}
       <div class="col-lg-8 col-md-10 mx-auto">
