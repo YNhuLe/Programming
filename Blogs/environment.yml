@@ -78,6 +78,8 @@ dependencies:
   - xz=5.4.6=h8cc25b3_1
   - zlib=1.2.13=h8cc25b3_1
   - zstd=1.5.5=hd43e919_2
+  - gunicorn==21.2.0
+  - psycopg2-binary==2.9.9
   - pip:
       - bleach==6.2.0
       - blinker==1.8.2
